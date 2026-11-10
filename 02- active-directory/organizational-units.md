@@ -10,10 +10,10 @@ The lab uses the following structure:
 
 ad.Sebbeco.test
 └── Sebbeco
-    ├── IT
-    ├── HR
-    ├── Finance
-    └── Management
+    - IT
+    - HR
+    - Finance
+    - Management
 
 ## Department OUs
 
