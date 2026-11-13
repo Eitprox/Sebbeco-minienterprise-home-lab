@@ -1,14 +1,14 @@
-# Sebbeco-minienterprise-home-lab
-A virtual mini enterprise environment lab. Build with Windows server, Active directory, Windows 11 
 # Sebbeco Enterprise Home Lab
+
+A virtual mini-enterprise environment built to develop practical skills in IT infrastructure, system administration, networking and cybersecurity.
 
 ## Overview
 
 This project documents the design, implementation and administration of a virtual enterprise IT environment.
 
-The purpose is to gain practical experience in IT infrastructure, system administration, networking and cybersecurity by simulating a small corporate network.
+The purpose is to gain practical experience by simulating a small corporate network using VMware Workstation, Windows Server, Windows 11 and Ubuntu Server.
 
-The lab is built using VMware Workstation and consists of Windows Server and Windows 11 virtual machines.
+The lab is continuously expanded with new infrastructure configurations, security monitoring capabilities and practical investigation exercises.
 
 ## Lab Environment
 
@@ -17,15 +17,21 @@ The lab is built using VMware Workstation and consists of Windows Server and Win
 | Hypervisor | VMware Workstation | Virtualization |
 | Domain Controller | Windows Server 2025 | Active Directory and DNS |
 | Client Workstation | Windows 11 Pro | Domain-connected workstation |
+| SIEM Server | Ubuntu Server 24.04.5 | Wazuh Manager, Indexer and Dashboard |
 | Directory Services | Active Directory Domain Services | Centralized identity management |
 | Group Policy | Group Policy Management | Centralized security configuration |
 
 ## Network Architecture
 
+The virtual machines communicate through an isolated VMware Host-only network.
+
 | Device | Hostname | IP Address |
 |---|---|---|
 | Domain Controller | DC01 | 192.168.10.10 |
 | Client Workstation | CLIENT01 | 192.168.10.20 |
+| SIEM Server | WAZUH01 | 192.168.10.30 |
+
+**Network:** `192.168.10.0/24`
 
 **Active Directory Domain:** `ad.Sebbeco.test`
 
@@ -52,30 +58,73 @@ The lab is built using VMware Workstation and consists of Windows Server and Win
 - Created a dedicated Group Policy Object for the HR department.
 - Configured automatic screen saver activation after 300 seconds.
 - Enabled password protection when resuming from the screen saver.
+- Created a security GPO enabling PowerShell Script Block Logging.
 - Verified policy application using `gpupdate` and `gpresult`.
+
+### 4. Security Monitoring and SIEM
+
+- Deployed Wazuh as an all-in-one SIEM solution on Ubuntu Server.
+- Installed and enrolled the Wazuh agent on CLIENT01.
+- Integrated Sysmon for detailed Windows endpoint telemetry.
+- Configured PowerShell Operational event collection.
+- Enabled raw JSON event archiving on the Wazuh Manager.
+- Configured a Wazuh Dashboard index pattern for archived events.
+- Verified centralized event collection through Wazuh Discover.
+
+### 5. Security Event Investigation
+
+Collected and investigated the following event types:
+
+| Event ID | Source | Description |
+|---|---|---|
+| 1 | Sysmon | Process creation |
+| 3 | Sysmon | Network connection |
+| 5 | Sysmon | Process termination |
+| 11 | Sysmon | File creation |
+| 4104 | PowerShell | Script Block Logging |
+
+Practical exercises include:
+
+- Investigating parent-child process relationships.
+- Analyzing PowerShell execution and script contents.
+- Investigating endpoint network connections.
+- Correlating process and network activity.
+- Assessing suspicious behaviour using available event evidence.
+
+All current investigation exercises use controlled, benign activity within the isolated lab.
 
 ## Technologies and Tools
 
 - VMware Workstation
 - Windows Server 2025
 - Windows 11 Pro
-- Active Directory
+- Ubuntu Server 24.04.5 LTS
+- Active Directory Domain Services
 - DNS
 - Group Policy Management
 - PowerShell
+- Sysmon
+- Wazuh SIEM
+- Linux administration
 - Networking and TCP/IP
+- Git and GitHub
 
 ## Future Improvements
 
 - Implement additional Group Policy security configurations.
-- Configure Windows Defender security policies.
-- Deploy Wazuh SIEM for centralized security monitoring.
-- Integrate Sysmon for endpoint event logging.
-- Perform network scanning and security assessments.
-- Document security incidents and investigation procedures.
+- Expand Windows Defender monitoring.
+- Configure PowerShell Module Logging.
+- Develop custom Wazuh detection rules.
+- Perform network scanning and service enumeration using Nmap.
+- Document additional security incidents and investigation procedures.
+- Expand SOC investigation and incident response exercises.
 
 ## Project Status
 
 **Ongoing development.**
 
-This is a practical learning project. New configurations, tests and documentation will be added as the lab evolves.
+The core infrastructure, Active Directory environment and initial security monitoring implementation are operational.
+
+Wazuh successfully collects Sysmon and PowerShell events from CLIENT01, which can be investigated centrally through Wazuh Dashboard.
+
+New configurations, tests and documentation will continue to be added as the lab evolves.
