@@ -79,6 +79,12 @@ The integration has been verified by:
 - Verifying that Wazuh receives and archives the events.
 - Searching for script contents in Wazuh Discover.
 
+### Screenshot
+
+![Wazuh PowerShell Script Block Logging](../screenshots/wazuh-powershell-script-block-logging.png)
+
+The screenshot demonstrates centralized collection and investigation of PowerShell Script Block Logging events (Event ID 4104) from CLIENT01.
+
 ## Security Investigation Exercises
 
 Initial investigation exercises have been performed using the collected telemetry.
